@@ -8,16 +8,16 @@ const WalletEthers = () => {
     const [provider, setProvider] = useState()
 
     const connectWallet = async () => {
-        try {
+        if (window.ethereum && currentAccount == null) {
             setProvider(new ethers.providers.Web3Provider(window.ethereum))
             const accounts = await provider.send("eth_requestAccounts", []);
             console.log(accounts)
             setCurrentAccount(accounts[0])
             setButtonText('Wallet Connected')
         }
-        catch (error) {
-            console.log(error);
-            throw new Error("No ethereum object");
+        else {
+            console.log('Need to install MetaMask');
+            alert('Please install MetaMask browser extension to interact');
         }
     }
 
